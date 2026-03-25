@@ -266,3 +266,9 @@
     box-shadow: 6px 4px 0 #a400a4, 12px 2px 0 #a400a4;
     opacity: 0.6;
 }
+
+.spray-text {
+    filter: blur(0.5px) drop-shadow(2px 2px 0px rgba(0,0,0,0.1));
+    background-clip: text;
+    -webkit-background-clip: text;
+}
