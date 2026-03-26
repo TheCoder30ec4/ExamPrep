@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Upload Materials - The Urban Scholar</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Epilogue:wght@700;900&amp;family=Inter:wght@400;500;600&amp;family=Space_Grotesk:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "on-primary-fixed-variant": "#540054",
+                "on-tertiary-fixed-variant": "#526900",
+                "tertiary-fixed-dim": "#beee00",
+                "surface-container": "#e7e8e8",
+                "surface-container-highest": "#dbdddd",
+                "error-container": "#f74b6d",
+                "surface-tint": "#a400a4",
+                "on-secondary-fixed": "#003a42",
+                "outline-variant": "#acadad",
+                "on-secondary-container": "#004f59",
+                "inverse-surface": "#0c0f0f",
+                "on-tertiary-container": "#4a5e00",
+                "surface": "#f6f6f6",
+                "on-surface-variant": "#5a5c5c",
+                "on-error": "#ffefef",
+                "secondary-dim": "#005863",
+                "background": "#f6f6f6",
+                "inverse-on-surface": "#9c9d9d",
+                "tertiary-dim": "#435600",
+                "on-secondary": "#d8f8ff",
+                "secondary-fixed-dim": "#00d7f0",
+                "surface-bright": "#f6f6f6",
+                "primary-fixed-dim": "#ff1cfe",
+                "surface-variant": "#dbdddd",
+                "primary-fixed": "#ff5af9",
+                "on-surface": "#2d2f2f",
+                "secondary": "#006571",
+                "surface-dim": "#d2d5d5",
+                "error-dim": "#a70138",
+                "on-primary-fixed": "#000000",
+                "surface-container-high": "#e1e3e3",
+                "error": "#b41340",
+                "primary-dim": "#900090",
+                "on-tertiary": "#e1ff88",
+                "secondary-container": "#26e6ff",
+                "tertiary": "#4e6300",
+                "inverse-primary": "#fe00fe",
+                "tertiary-container": "#cafd00",
+                "on-tertiary-fixed": "#3a4a00",
+                "on-error-container": "#510017",
+                "primary-container": "#ff5af9",
+                "surface-container-lowest": "#ffffff",
+                "secondary-fixed": "#26e6ff",
+                "tertiary-fixed": "#cafd00",
+                "on-secondary-fixed-variant": "#005964",
+                "primary": "#a400a4",
+                "surface-container-low": "#f0f1f1",
+                "on-primary": "#ffeef8",
+                "on-background": "#2d2f2f",
+                "outline": "#757777",
+                "on-primary-container": "#440044"
+              },
+              fontFamily: {
+                "headline": ["Epilogue"],
+                "body": ["Inter"],
+                "label": ["Space Grotesk"]
+              },
+              borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+            },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .text-neon-glow {
+            text-shadow: 0 0 10px rgba(164, 0, 164, 0.4);
+        }
+        .asymmetric-cut {
+            clip-path: polygon(0% 0%, 100% 2%, 98% 100%, 0% 98%);
+        }
+        .sticker-tooltip {
+            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 15% 100%, 0% 85%);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface font-body text-on-surface selection:bg-primary-container">
+<!-- TopAppBar from JSON -->
+<header class="flex justify-between items-center px-6 py-4 w-full bg-[#f6f6f6] dark:bg-zinc-900 shadow-[4px_4px_0px_0px_rgba(164,0,164,0.2)] fixed top-0 z-50">
+<div class="flex items-center gap-4">
+<button class="hover:skew-x-2 transition-transform active:translate-y-0.5 active:translate-x-0.5 text-[#a400a4] dark:text-[#ff00ff]">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+<h1 class="font-['Epilogue'] font-black uppercase tracking-tighter -rotate-1 text-2xl italic text-[#a400a4]">ExamPle</h1>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest overflow-hidden border-2 border-primary">
+<img alt="User profile" class="w-full h-full object-cover" data-alt="Vibrant illustrated avatar of a student profile" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzz49NuRryLyBXi-pYi7oZBhB2zBUjL7tiOslonfBcjMo8txnPo-WgUgP4q959ZYFbYTH3dL2a3Ji-o26SagcCtkQ68Be-tzyCnKga2DOchcdPFq4KCCKJgSBPe3lwUMUv2bw9aU35-jEVSP1rYS_kMUpxpvudXynhm6v4qlymUiPguKlhBsxXxIvi-D8x6lnLdkCznC949SWYaIO7u5IzY4tQiYuiFsW3xmG8k2dzrLsQ-sZQISlR6RljC_PxKzpA9ppAAU1wnB2V"/>
+</div>
+</div>
+</header>
+<main class="pt-24 pb-32 px-6 max-w-5xl mx-auto min-h-screen">
+<!-- Breadcrumb / Subject Header -->
+<div class="mb-12 flex items-center justify-between">
+<div class="relative">
+<span class="font-label text-sm uppercase bg-tertiary-container text-on-tertiary-container px-3 py-1 -rotate-2 inline-block mb-2">Subject: Quantum Physics</span>
+<h2 class="font-headline text-5xl md:text-7xl font-black text-on-surface tracking-tight leading-none uppercase">
+                    Upload Your <br/><span class="text-primary">Material</span>
+</h2>
+</div>
+<div class="hidden md:block sticker-tooltip bg-on-surface text-surface px-6 py-4 max-w-[200px] text-sm font-label font-bold uppercase rotate-3">
+                Feed the AI, Get the Vibe.
+            </div>
+</div>
+<!-- Main Content Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+<!-- Upload Drop Zone (Loud Neon Border) -->
+<section class="md:col-span-8 group">
+<div class="relative bg-surface-container-lowest p-12 rounded-xl border-4 border-dashed border-primary/30 group-hover:border-primary transition-colors flex flex-col items-center justify-center text-center shadow-[12px_12px_0px_0px_rgba(164,0,164,0.1)] h-full min-h-[400px]">
+<!-- Hand-drawn Arrow Doodle SVG -->
+<div class="absolute -top-10 -right-10 hidden lg:block rotate-12 text-tertiary">
+<svg fill="none" height="100" viewbox="0 0 100 100" width="100" xmlns="http://www.w3.org/2000/svg">
+<path d="M10 20C40 10 70 40 85 80M85 80L75 65M85 80L95 70" stroke="currentColor" stroke-linecap="round" stroke-width="4"></path>
+</svg>
+<span class="font-label font-bold text-xs">DROP IT HERE!</span>
+</div>
+<div class="w-24 h-24 mb-6 rounded-full bg-primary-container/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-5xl" data-icon="cloud_upload">cloud_upload</span>
+</div>
+<h3 class="font-headline text-2xl font-black mb-2">Drag &amp; Drop Your Brain</h3>
+<p class="font-body text-on-surface-variant max-w-sm mb-8">PDFs, Lecture Notes, or Photos of your scribbles. Max 50MB per file.</p>
+<button class="bg-primary text-on-primary px-8 py-4 rounded-xl font-headline font-bold text-lg hover:shadow-[0_0_20px_rgba(164,0,164,0.4)] transition-all active:translate-y-1 active:translate-x-1">
+                        SELECT FILES
+                    </button>
+<div class="absolute bottom-6 left-6 opacity-20 pointer-events-none rotate-6">
+<span class="material-symbols-outlined text-8xl" data-icon="description">description</span>
+</div>
+</div>
+</section>
+<!-- Uploaded Files List -->
+<section class="md:col-span-4 flex flex-col gap-6">
+<div class="bg-surface-container-low p-6 rounded-xl border-l-8 border-tertiary">
+<h4 class="font-label text-sm font-black uppercase mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary" data-icon="inventory_2">inventory_2</span>
+                        Uploaded Files (2)
+                    </h4>
+<div class="space-y-4">
+<!-- File Card 1 -->
+<div class="bg-surface-container-lowest p-4 rounded-lg flex items-center justify-between group cursor-pointer hover:bg-tertiary-container/10 transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-secondary-container rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-on-secondary-container" data-icon="picture_as_pdf">picture_as_pdf</span>
+</div>
+<div>
+<p class="font-body font-bold text-xs truncate max-w-[120px]">Entanglement_Lecture.pdf</p>
+<p class="font-label text-[10px] text-on-surface-variant uppercase">4.2 MB</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-tertiary font-black" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<!-- File Card 2 -->
+<div class="bg-surface-container-lowest p-4 rounded-lg flex items-center justify-between group cursor-pointer hover:bg-tertiary-container/10 transition-colors">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-secondary-container rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-on-secondary-container" data-icon="description">description</span>
+</div>
+<div>
+<p class="font-body font-bold text-xs truncate max-w-[120px]">Schrodinger_Notes.txt</p>
+<p class="font-label text-[10px] text-on-surface-variant uppercase">12 KB</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-tertiary font-black" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+</div>
+</div>
+<!-- Tip Card -->
+<div class="bg-primary p-6 rounded-xl text-white asymmetric-cut relative overflow-hidden">
+<div class="absolute top-0 right-0 p-2 opacity-30">
+<span class="material-symbols-outlined text-6xl" data-icon="lightbulb">lightbulb</span>
+</div>
+<p class="font-headline font-black text-xl mb-2">PRO TIP:</p>
+<p class="font-body text-sm leading-relaxed">Better quality notes = harder vibes. Make sure your text is clear!</p>
+</div>
+</section>
+</div>
+<!-- Call To Action -->
+<div class="mt-20 flex flex-col items-center">
+<div class="mb-6 flex items-center gap-2 text-on-surface-variant">
+<span class="h-px w-12 bg-outline-variant"></span>
+<span class="font-label text-xs uppercase tracking-widest">Done Uploading?</span>
+<span class="h-px w-12 bg-outline-variant"></span>
+</div>
+<button class="group relative px-12 py-6 bg-on-surface text-surface rounded-xl overflow-hidden hover:scale-105 transition-transform active:scale-95">
+<div class="absolute inset-0 bg-gradient-to-r from-primary to-secondary opacity-0 group-hover:opacity-20 transition-opacity"></div>
+<span class="relative z-10 font-headline font-black text-3xl tracking-tighter uppercase flex items-center gap-4">
+                    Next: Choose Your Vibe
+                    <span class="material-symbols-outlined text-3xl" data-icon="arrow_forward">arrow_forward</span>
+</span>
+</button>
+</div>
+</main>
+<!-- BottomNavBar from JSON -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-end pb-6 px-4 bg-white/60 dark:bg-black/60 backdrop-blur-xl z-50 rounded-t-[24px] shadow-[0_-8px_32px_rgba(164,0,164,0.08)]">
+<div class="flex flex-col items-center justify-center text-zinc-500 p-2 font-['Space_Grotesk'] text-[10px] uppercase font-bold hover:text-[#006571] transition-colors active:scale-95 duration-100">
+<span class="material-symbols-outlined mb-1" data-icon="library_books">library_books</span>
+            Library
+        </div>
+<div class="flex flex-col items-center justify-center bg-[#a400a4] text-white rounded-xl p-3 scale-110 -translate-y-2 shadow-lg font-['Space_Grotesk'] text-[10px] uppercase font-bold active:scale-95 duration-100">
+<span class="material-symbols-outlined mb-1" data-icon="cloud_upload">cloud_upload</span>
+            Upload
+        </div>
+<div class="flex flex-col items-center justify-center text-zinc-500 p-2 font-['Space_Grotesk'] text-[10px] uppercase font-bold hover:text-[#006571] transition-colors active:scale-95 duration-100">
+<span class="material-symbols-outlined mb-1" data-icon="auto_awesome">auto_awesome</span>
+            Vibe
+        </div>
+<div class="flex flex-col items-center justify-center text-zinc-500 p-2 font-['Space_Grotesk'] text-[10px] uppercase font-bold hover:text-[#006571] transition-colors active:scale-95 duration-100">
+<span class="material-symbols-outlined mb-1" data-icon="timer">timer</span>
+            Focus
+        </div>
+</nav>
+<!-- Abstract Background Elements -->
+<div class="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none opacity-40">
+<div class="absolute top-1/4 left-10 w-64 h-64 rounded-full bg-primary/5 blur-[100px]"></div>
+<div class="absolute bottom-1/4 right-10 w-96 h-96 rounded-full bg-tertiary/5 blur-[120px]"></div>
+</div>
+</body></html>

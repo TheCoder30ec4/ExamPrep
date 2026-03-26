@@ -1,8 +1,9 @@
 from datetime import datetime, timedelta
 
 import jwt
-from app.config import Settings
 from pytz import timezone  # type: ignore
+
+from app.config import Settings
 
 
 def create_access_token(data: dict):

@@ -3,7 +3,12 @@ import { createContext, useCallback, useContext, useState } from 'react'
 
 const STORAGE_KEY = 'exam_prep_user'
 
-export type AuthUser = { name: string; email: string }
+export type AuthUser = { 
+  name: string; 
+  email: string;
+  access_token?: string;
+  refresh_token?: string;
+}
 
 type AuthContextValue = {
   user: AuthUser | null
@@ -21,7 +26,12 @@ function loadStoredUser(): AuthUser | null {
     const parsed = JSON.parse(raw) as unknown
     if (parsed && typeof parsed === 'object' && 'email' in parsed && typeof (parsed as AuthUser).email === 'string') {
       const u = parsed as AuthUser
-      return { name: u.name ?? 'User', email: u.email }
+      return { 
+        name: u.name ?? 'User', 
+        email: u.email,
+        access_token: u.access_token,
+        refresh_token: u.refresh_token
+      }
     }
   } catch {
     // ignore
@@ -34,8 +44,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const setUser = useCallback((u: AuthUser | null) => {
     setUserState(u)
-    if (u) localStorage.setItem(STORAGE_KEY, JSON.stringify(u))
-    else localStorage.removeItem(STORAGE_KEY)
+    if (u) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(u))
+    } else {
+      localStorage.removeItem(STORAGE_KEY)
+    }
   }, [])
 
   const logout = useCallback(() => {

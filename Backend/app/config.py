@@ -7,7 +7,9 @@ load_dotenv()
 
 class Settings:
     DATA_BASE_URL = os.getenv("DATABASE_URL", "")
-    SECRET_KEY = os.getenv("SECRET_KEY", "")
+    SECRET_KEY = os.getenv(
+        "SECRET_KEY", "your-secret-key-at-least-32-characters-long-for-hs256-algorithm"
+    )
     ALGORITHM = os.getenv("ALGORITHM", "HS256")
     ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "30"))
     REFRESH_TOKEN_EXPIRE_MINUTES = int(os.getenv("REFRESH_TOKEN_EXPIRE_MINUTES", "1440"))

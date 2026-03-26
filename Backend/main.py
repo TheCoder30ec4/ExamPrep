@@ -1,8 +1,10 @@
 import uvicorn
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.openapi.utils import get_openapi
+
 from app.database.core import Base, engine
 from app.router import api_router
-from fastapi import FastAPI
-from fastapi.openapi.utils import get_openapi
 
 app = FastAPI(
     title="ExamPrep API",
@@ -12,6 +14,21 @@ app = FastAPI(
     openapi_url="/openapi.json",
     redoc_url="/redoc",
 )
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",
+        "http://localhost:3000",
+        "http://127.0.0.1:5173",
+        "http://127.0.0.1:3000",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 # Drop all tables and recreate them (for development)
 Base.metadata.drop_all(bind=engine)
 Base.metadata.create_all(bind=engine)
@@ -52,9 +69,10 @@ app.openapi = custom_openapi  # type: ignore
 
 if __name__ == "__main__":
     uvicorn.run(
-        app,
+        "main:app",
         host="0.0.0.0",  # nosec B104
         port=8000,
+        reload=True,
     )
 
 # from app import get_logger

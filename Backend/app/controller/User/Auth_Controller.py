@@ -1,6 +1,6 @@
 from typing import Optional
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from sqlalchemy.orm import Session
 
@@ -17,20 +17,22 @@ security = HTTPBearer()
 def signup(user_request: UserSignUpDTO, db: Session = Depends(get_db)):
     auth_service = AuthService(db)
     result = auth_service.signup(user_request)
-    if result:
-        return {"message": "User signed up successfully", "user": result}
-    else:
-        return {"message": "User with this email already exists."}
+    if not result:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, detail="User with this email already exists."
+        )
+    return result
 
 
 @router.post("/signin", response_model=Token)
 def signin(user_request: UserSignInDTO, db: Session = Depends(get_db)):
     auth_service = AuthService(db)
     result = auth_service.signin(user_request)
-    if result:
-        return {"message": "User signed in successfully", "user": result}
-    else:
-        return {"message": "Invalid email or password"}
+    if not result:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid email or password"
+        )
+    return result
 
 
 @router.post("/refresh", response_model=Token)
@@ -41,7 +43,8 @@ def refresh_token(
 ):
     auth_service = AuthService(db)
     result = auth_service.refresh_token(refresh_token)
-    if result:
-        return {"message": "Token refreshed successfully", "token": result}
-    else:
-        return {"message": "Invalid refresh token"}
+    if not result:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid refresh token"
+        )
+    return result

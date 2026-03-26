@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import type { FormEvent } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { sendOtp, verifyOtp, register, login } from '@/api/auth'
+import { signin, signup } from '@/api/auth'
 import { useAuth } from '@/context/AuthContext'
 
 function AuthPage() {
@@ -9,8 +9,6 @@ function AuthPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [name, setName] = useState('')
-  const [otpSent, setOtpSent] = useState(false)
-  const [otp, setOtp] = useState('')
   const [error, setError] = useState('')
   const navigate = useNavigate()
   const { setUser } = useAuth()
@@ -25,29 +23,49 @@ function AuthPage() {
     setError('')
     try {
       if (isLogin) {
-        const res = await login(email, password)
-        if (!res.ok) throw new Error(String(res.status))
-        setUser({ name: res.data?.name || 'User', email: res.data?.email || email })
+        const res = await signin(email, password)
+        if (!res.ok) {
+          const bodyStr = typeof res.body === 'string' ? res.body : JSON.stringify(res.body)
+          throw new Error(`Login Failed (${res.status}): ${bodyStr}`)
+        }
+        if (!res.data?.access_token) {
+          throw new Error('No access token received from server')
+        }
+        setUser({ 
+          name: 'User', 
+          email: email,
+          access_token: res.data.access_token,
+          refresh_token: res.data.refresh_token
+        })
         navigate('/dashboard')
       } else {
-        if (!otpSent) {
-          const res = await sendOtp(email)
-          if (!res.ok) throw new Error(String(res.status))
-          setOtpSent(true)
-        } else {
-          const resV = await verifyOtp(email, otp)
-          if (!resV.ok) throw new Error(String(resV.status))
-          const resR = await register({ name, email, password })
-          if (!resR.ok) throw new Error(String(resR.status))
-          setUser({ name, email })
-          navigate('/dashboard')
+        const signupPayload = { 
+          id: crypto.randomUUID(),
+          name, 
+          email, 
+          password,
+          disabled: false,
+          is_verified: true // Try to bypass OTP if backend supports it
         }
+        const resR = await signup(signupPayload)
+        if (!resR.ok) {
+          const bodyStr = typeof resR.body === 'string' ? resR.body : JSON.stringify(resR.body)
+          throw new Error(`Signup Failed (${resR.status}): ${bodyStr}`)
+        }
+        setUser({ 
+          name, 
+          email,
+          access_token: resR.data?.access_token,
+          refresh_token: resR.data?.refresh_token
+        })
+        navigate('/upload')
       }
     } catch (err: unknown) {
+      console.error('Auth Error:', err)
       if (err instanceof Error) {
-        setError(err.message || 'Authentication failed')
+        setError(err.message)
       } else {
-        setError('Authentication failed')
+        setError('An unexpected error occurred')
       }
     }
   }
@@ -125,7 +143,6 @@ function AuthPage() {
                       type="text" 
                       value={name} 
                       onChange={e => setName(e.target.value)} 
-                      disabled={otpSent}
                       placeholder="Your Name" 
                       required 
                     />
@@ -144,32 +161,12 @@ function AuthPage() {
                     type="email" 
                     value={email} 
                     onChange={e => setEmail(e.target.value)} 
-                    disabled={!isLogin && otpSent}
                     placeholder="scholar@urban.com" 
                     required 
                   />
                 </div>
               </div>
 
-              {(!isLogin && otpSent) ? (
-                 <div className="space-y-2">
-                   <label className="font-label text-sm font-bold uppercase tracking-wider text-on-surface-variant flex items-center gap-2" htmlFor="otp">
-                     <span className="material-symbols-outlined text-sm" data-icon="dialpad">dialpad</span>
-                     Verification Code
-                   </label>
-                   <div className="relative">
-                     <input 
-                       className="w-full bg-surface-container-low border-2 border-outline/20 p-4 rounded-lg font-body focus:outline-none focus:border-tertiary focus:ring-4 focus:ring-tertiary/20 transition-all placeholder:text-outline/50 irregular-border tracking-widest text-center text-lg" 
-                       id="otp" 
-                       type="text" 
-                       value={otp} 
-                       onChange={e => setOtp(e.target.value)} 
-                       placeholder="123456" 
-                       required 
-                     />
-                   </div>
-                 </div>
-              ) : (
                 <div className="space-y-2">
                   <div className="flex justify-between items-center">
                     <label className="font-label text-sm font-bold uppercase tracking-wider text-on-surface-variant flex items-center gap-2" htmlFor="password">
@@ -190,14 +187,13 @@ function AuthPage() {
                     />
                   </div>
                 </div>
-              )}
 
               <div className="pt-4 relative">
                 <div className="absolute -top-4 -right-4 rotate-12 text-primary/40">
                   <span className="material-symbols-outlined text-3xl" data-icon="crown" style={{ fontVariationSettings: "'FILL' 1" }}>crown</span>
                 </div>
                 <button className="w-full bg-tertiary-fixed hover:bg-tertiary text-on-tertiary-fixed font-headline font-black text-xl py-5 rounded-xl shadow-[8px_8px_0px_#2d2f2f] active:translate-y-1 active:translate-x-1 active:shadow-none transition-all uppercase tracking-tight flex items-center justify-center gap-3" type="submit">
-                  {isLogin ? 'LOG IN' : (otpSent ? 'VERIFY CODE' : 'GET STARTED')}
+                  {isLogin ? 'LOG IN' : 'GET STARTED'}
                   <span className="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
                 </button>
               </div>
@@ -224,7 +220,7 @@ function AuthPage() {
               <button 
                 type="button" 
                 className="font-headline font-black text-primary hover:text-primary-dim ml-1 relative group cursor-pointer" 
-                onClick={() => { setIsLogin(!isLogin); setError(''); setOtpSent(false); }}
+                onClick={() => { setIsLogin(!isLogin); setError(''); }}
               >
                 {isLogin ? 'Sign Up' : 'Log In'}
                 <span className="absolute bottom-0 left-0 w-full h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></span>

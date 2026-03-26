@@ -4,21 +4,21 @@ repos:
     hooks:
       - id: black
         language_version: python3.12
-        args: [--line-length=100]
+        args: [--line-length=100, --check]
 
   - repo: https://github.com/PyCQA/isort
     rev: 5.13.2
     hooks:
       - id: isort
-        args: [--profile=black, --line-length=100]
+        args: [--profile=black, --line-length=100, --check-only]
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
     rev: v0.15.7
     hooks:
       - id: ruff
-        args: [--fix, --line-length=100]
-      - id: ruff-format
         args: [--line-length=100]
+      - id: ruff-format
+        args: [--check, --line-length=100]
 
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.19.1

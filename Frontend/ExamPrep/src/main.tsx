@@ -7,8 +7,11 @@ import AuthPage from './pages/AuthPage.tsx'
 import Dashboard from './pages/Dashboard.tsx'
 import HowItWorks from './pages/HowItWorks.tsx'
 import Pricing from './pages/Pricing.tsx'
+import UploadMaterial from './pages/UploadMaterial.tsx'
+import ChooseVibe from './pages/ChooseVibe.tsx'
 import { AuthProvider } from './context/AuthContext'
 import { ProtectedRoute } from './components/ProtectedRoute'
+import { GuestRoute } from './components/GuestRoute'
 import LoadingScreen from './components/LoadingScreen'
 import { preloadImages } from './lib/preloader'
 
@@ -43,21 +46,23 @@ function App() {
 
   return (
     <BrowserRouter>
-      <AuthProvider>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/how-it-works" element={<HowItWorks />} />
-          <Route path="/pricing" element={<Pricing />} />
-          <Route path="/auth" element={<AuthPage />} />
-          <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-        </Routes>
-      </AuthProvider>
+      <Routes>
+        <Route path="/" element={<GuestRoute><Home /></GuestRoute>} />
+        <Route path="/how-it-works" element={<HowItWorks />} />
+        <Route path="/pricing" element={<Pricing />} />
+        <Route path="/auth" element={<GuestRoute><AuthPage /></GuestRoute>} />
+        <Route path="/upload" element={<ProtectedRoute><UploadMaterial /></ProtectedRoute>} />
+        <Route path="/vibe" element={<ProtectedRoute><ChooseVibe /></ProtectedRoute>} />
+        <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+      </Routes>
     </BrowserRouter>
   );
 }
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
+    <AuthProvider>
+      <App />
+    </AuthProvider>
   </StrictMode>,
 )
