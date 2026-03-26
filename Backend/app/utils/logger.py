@@ -36,6 +36,8 @@ class FileTrackingLogger:
         frame = inspect.currentframe()
         try:
             for _ in range(10):
+                if frame is None:
+                    break
                 frame = frame.f_back
                 if frame is None:
                     break
@@ -61,7 +63,7 @@ class FileTrackingLogger:
             level="DEBUG",
             rotation="5 MB",
             retention=5,
-            filter=lambda record, mod=module_name: record["extra"].get("module") == mod,
+            filter=lambda record, mod=module_name: record["extra"].get("module") == mod,  # type: ignore
         )
         self.registered_modules.add(module_name)
 
@@ -93,9 +95,7 @@ class FileTrackingLogger:
             _loguru_logger.bind(module=from_module).info(
                 f"→ Execution has been moved to {to_module}"
             )
-            _loguru_logger.bind(module=to_module).info(
-                f"← Execution started from {from_module}"
-            )
+            _loguru_logger.bind(module=to_module).info(f"← Execution started from {from_module}")
 
 
 # Global instance
