@@ -5,6 +5,9 @@ from fastapi.openapi.utils import get_openapi
 
 from app.database.core import Base, engine
 from app.router import api_router
+from app.utils import get_logger
+
+logger = get_logger()
 
 app = FastAPI(
     title="ExamPrep API",
@@ -14,6 +17,7 @@ app = FastAPI(
     openapi_url="/openapi.json",
     redoc_url="/redoc",
 )
+logger.info("FastAPI application initialized")
 
 # Add CORS middleware
 app.add_middleware(
@@ -28,15 +32,20 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+logger.debug("CORS middleware configured for development")
 
 # Drop all tables and recreate them (for development)
+logger.warning("Dropping and recreating all tables (development mode)")
 Base.metadata.drop_all(bind=engine)
 Base.metadata.create_all(bind=engine)
+logger.info("Database tables created successfully")
 app.include_router(api_router)
+logger.info("API routes included")
 
 
 @app.get("/")
 def root():
+    logger.info("Root endpoint accessed")
     return {"message": "Welcome to ExamPrep API!"}
 
 
@@ -44,6 +53,7 @@ def custom_openapi():
     if app.openapi_schema:
         return app.openapi_schema
 
+    logger.debug("Generating OpenAPI schema")
     openapi_schema = get_openapi(
         title="ExamPrep API",
         version="1.0.0",
@@ -62,34 +72,17 @@ def custom_openapi():
     }
 
     app.openapi_schema = openapi_schema
+    logger.info("OpenAPI schema generated successfully")
     return app.openapi_schema
 
 
 app.openapi = custom_openapi  # type: ignore
 
 if __name__ == "__main__":
+    logger.info("Starting ExamPrep API server on http://0.0.0.0:8000")
     uvicorn.run(
         "main:app",
         host="0.0.0.0",  # nosec B104
         port=8000,
         reload=True,
     )
-
-# from app import get_logger
-
-# def main():
-#     logger = get_logger()
-
-#     logger.debug("This is a DEBUG message")
-#     logger.info("This is an INFO message")
-#     logger.warning("This is a WARNING message")
-#     logger.error("This is an ERROR message")
-#     logger.critical("This is a CRITICAL message")
-
-#     try:
-#         1 / 0
-#     except ZeroDivisionError as e:
-#         logger.exception(e)
-
-# if __name__ == "__main__":
-#     main()

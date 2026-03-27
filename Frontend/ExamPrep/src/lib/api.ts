@@ -9,6 +9,3 @@ const getApiBase = (): string => {
 }
 
 export const API_BASE = getApiBase()
-
-export const SEND_MAIL_URL = 'https://n8n.ch-varun.xyz/webhook/send-mail'
-export const VERIFY_OTP_URL = 'https://n8n.ch-varun.xyz/webhook/verify-otp'

@@ -9,6 +9,7 @@ import HowItWorks from './pages/HowItWorks.tsx'
 import Pricing from './pages/Pricing.tsx'
 import UploadMaterial from './pages/UploadMaterial.tsx'
 import ChooseVibe from './pages/ChooseVibe.tsx'
+import Profile from './pages/Profile.tsx'
 import { AuthProvider } from './context/AuthContext'
 import { ProtectedRoute } from './components/ProtectedRoute'
 import { GuestRoute } from './components/GuestRoute'
@@ -54,6 +55,7 @@ function App() {
         <Route path="/upload" element={<ProtectedRoute><UploadMaterial /></ProtectedRoute>} />
         <Route path="/vibe" element={<ProtectedRoute><ChooseVibe /></ProtectedRoute>} />
         <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+        <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
       </Routes>
     </BrowserRouter>
   );
